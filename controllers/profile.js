@@ -1,6 +1,10 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
+require('dotenv').config()
+const { cloud_name,api_key,api_secret } = process.env
+
+
 
 const UploadPhoto = (req, res) => {
  
@@ -16,9 +20,9 @@ const UploadPhoto = (req, res) => {
    // SEND FILE TO CLOUDINARY
    const cloudinary = require('cloudinary').v2
    cloudinary.config({
-     cloud_name: 'dz62ca2ab',
-     api_key: '486761924517661',
-     api_secret: 'nF9Jsk-tKzf7xkWdEjhEo5zK-jE'
+     cloud_name: cloud_name,
+     api_key: api_key,
+     api_secret: api_secret
    })
    
    const path = req.file.path
@@ -126,7 +130,20 @@ const verifyPin = async (req,res) => {
       }
 }
 
+const getProfile = async (req,res) => {
 
+
+    try{
+        const user = await User.findOne({ _id: req.user.id }).sort('createdAt')
+        res.status(200).json({ status:"Success", message:user })
+    }catch(err){
+        console.log(err.message)
+        console.error(err)
+        res.json({Error:err.message})
+
+    }
+
+}
 
 
 
@@ -135,6 +152,7 @@ module.exports = {
      
      UploadPhoto,
      getProfilePhoto,
+     getProfile,
      setPin,
      verifyPin
 }
