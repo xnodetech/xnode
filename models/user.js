@@ -31,7 +31,16 @@ const userSchema = new Schema({
     
     password: {
         type: String
+    },
+    profilePhoto :{
+        type: String,
+        
+    },
+    pin:{
+        type:String,
+        max: 4
     }
+    
     
   
 },{ timestamps: true })

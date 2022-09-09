@@ -9,6 +9,7 @@ exports.createToken = (user) => {
             username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
+            email:user.email
         }, secret, {expiresIn:expiryDate})
         return token
     } catch(err) {

@@ -6,7 +6,7 @@ const connectDB = (app,portNumber) => {
     mongoose.connect(MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-    }).then(() => {
+    }).then(() => { 
         app.listen(portNumber,()=>{console.log("XNODE APP is running on "+portNumber)})
 
     }).catch((err) => {
