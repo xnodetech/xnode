@@ -5,6 +5,7 @@ const authRouter = require("./routes/authRouter")
 const LinkRouter = require("./routes/linkRouter")
 const ProfileRouter = require("./routes/profileRouter")
 const QRRouter = require("./routes/QrCodeRouter")
+const WalletRouter = require("./routes/walletRouter")
 const User = require('./models/user')
 const app = express()
 require('dotenv').config()
@@ -16,6 +17,7 @@ app.use("/auth",authRouter)
 app.use("/link",LinkRouter)
 app.use("/profile",ProfileRouter)
 app.use("/Qrcode",QRRouter)
+app.use("/wallet",WalletRouter)
 app.use("/:username",async(req,res) => {
   const {username} = req.params
   
