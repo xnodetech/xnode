@@ -7,4 +7,6 @@ router.post('/transferByUsername',authenticateUser, WalletController.transferByU
 router.post('/create',authenticateUser, WalletController.createWallet)
 router.get('/balance',authenticateUser, WalletController.getBalance)
 router.post('/transferByQrcode',authenticateUser, WalletController.transferByQrcode)
+router.post('/withdraw',authenticateUser, WalletController.withdraw)
+router.post('/topup',authenticateUser, WalletController.topup)
 module.exports = router

@@ -26,14 +26,84 @@ const createWallet = (req, res) => {
 
 }
 
-const topup = (req, res) => {
+const topup = async (req, res) => {
+const {amount} = req.body
+const {id} = req.user
+
+let wallet = await Wallet.findOne({
+    userId: id
+});
+if(!wallet){
+    return res.status(400).json({ status: "failure", message: "User has not created his wallet" })
+
+}
+let prevBalance = Number(wallet.amount)
+let amountToBeAdded = Number(amount)
+
+let updatedAmount = prevBalance + amountToBeAdded
+
+
+
+
+Wallet.updateOne({ userId: id }, {
+    $set: {
+   amount:updatedAmount
+   
+}}, async function (err, affected, resp) {
+    if (err) {
+        console.log(err.message)
+        console.error(err)
+        return res.json({ Error: err.message })
+    } else {
+     
+        return res.status(200).json({status:"Success",message:"Account has been credited with "+amount})
+        
+    }
+})
+
+
+
 
 
 }
 
-const withdraw = (req, res) => {
+const withdraw = async (req, res) => {
 
+    const {amount} = req.body
+    const {id} = req.user
+    
+    let wallet = await Wallet.findOne({
+        userId: id
+    });
+    if(!wallet){
+        return res.status(400).json({ status: "failure", message: "User has not created his wallet" })
+    
+    }
+    let prevBalance = Number(wallet.amount)
+    let amountToBeAdded = Number(amount)
+    
+    let updatedAmount = prevBalance - amountToBeAdded
+    
+    
+    
+    
+    Wallet.updateOne({ userId: id }, {
+        $set: {
+       amount:updatedAmount
+       
+    }}, async function (err, affected, resp) {
+        if (err) {
+            console.log(err.message)
+            console.error(err)
+            return res.json({ Error: err.message })
+        } else {
+         
+            return res.status(200).json({status:"Success",message:"Account has been debited with "+amount})
 
+        }
+    })
+    
+    
 
 
 }

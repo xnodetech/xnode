@@ -6,5 +6,5 @@ const { authenticateUser } = require('../middlewares/authentication')
 
 router.post("/generate",authenticateUser,QRController.generateQrCode)
 router.get("/profile",QRController.getProfile)
-
+router.get("/code",authenticateUser,QRController.getQrCode)
 module.exports = router;

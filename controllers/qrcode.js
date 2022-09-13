@@ -84,4 +84,13 @@ const getProfile = async (req,res) => {
 })
 
 }
-module.exports = {generateQrCode,getProfile}
+
+const getQrCode = async (req,res) => {
+const userId = req.user.id
+const qrCode = await QRCode.findOne({
+    userId: userId
+  });
+  res.status(200).json({status:"Success",message:qrCode.qrCodeDataImage})
+}
+
+module.exports = {generateQrCode,getProfile,getQrCode}
