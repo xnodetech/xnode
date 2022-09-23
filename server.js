@@ -10,7 +10,6 @@ const WalletRouter = require("./routes/walletRouter")
 const User = require('./models/user')
 const app = express()
 require('dotenv').config()
-const port = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json())
@@ -45,4 +44,4 @@ app.get("/", (req, res) => {
   });
     
 
-connectDB(app,port)
+connectDB(app)
