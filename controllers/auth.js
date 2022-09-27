@@ -15,7 +15,7 @@ exports.registerNewUser = (req, res) => {
         }
         // check if a user with this username exists
         if (existingUser) {
-            res.status(400).json({ message: 'a user with this username already exists' })
+            return res.status(400).json({ message: 'a user with this username already exists' })
         }
         // create a new user
         User.create({
