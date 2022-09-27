@@ -7,7 +7,7 @@ const connectDB = (app) => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => { 
-        app.listen(3000,()=>{console.log(" XNODE APP is running on ")})
+        app.listen(process.env.PORT || 3000,()=>{console.log(" XNODE APP is running on ")})
 
     }).catch((err) => {
         console.log(err.message)
