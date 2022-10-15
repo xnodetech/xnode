@@ -49,7 +49,7 @@ const AuthController = require("../controllers/auth");
  * @swagger
  * /auth/signup:
  *   post:
- *     summary: SIGNUP
+ *     summary: Create a new user
  *     tags: [USER]
  *     requestBody:
  *       required: true
