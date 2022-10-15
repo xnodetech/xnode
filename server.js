@@ -2,6 +2,8 @@ const express = require("express")
 const cors = require("cors")
 const connectDB = require("./config/db")
 const authRouter = require("./routes/authRouter")
+const swaggerUi = require("swagger-ui-express")
+const swaggerDocs = require("swagger-jsdoc")
 const LinkRouter = require("./routes/linkRouter")
 const CardRouter = require("./routes/cardRouter")
 const ProfileRouter = require("./routes/profileRouter")
@@ -19,7 +21,27 @@ app.use("/card",CardRouter)
 app.use("/profile",ProfileRouter)
 app.use("/Qrcode",QRRouter)
 app.use("/wallet",WalletRouter)
-app.use("/:username",async(req,res) => {
+
+    
+const options = {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "New Title",
+definition:{
+  openapi:"3.0.0",
+  info:{
+    title: "XNODE API",
+    version: "1.0.0",
+    description:"API ENDPOINTS "
+  },
+  servers:[
+    {
+      url:"https://xnodeapis.herokuapp.com/"
+    }
+  ]
+},
+  apis:["./routes/*.js"]
+}
+app.use("profiles/:username",async(req,res) => {
   const {username} = req.params
   
   try{
@@ -33,15 +55,15 @@ app.use("/:username",async(req,res) => {
 }
 
 })
+const specs = swaggerDocs(options)
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(specs))
 // Root route of express app
 app.get("/", (req, res) => {
-    res.send("WELCOME TO XNODE BACKEND SERVICE");
-  });
- app.get("*", (req, res) => {
-  
-   
-    res.send("PAGE NOT FOUND");
-  });
-    
+  res.send("<a href='/api-docs'>View Documentation</a>");
+});
+app.get("*", (req, res) => {
 
+ res.send("PAGE NOT FOUND");
+ 
+});
 connectDB(app)

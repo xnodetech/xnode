@@ -41,7 +41,7 @@ exports.registerNewUser = (req, res) => {
                     newUser.password = hashedPassword
                     newUser.save((err, savedUser) => {
                         if (err) {
-                            return res.status(500).json({ err });
+                            return res.status(400).json({ err });
                         }
                         // create jwt for user
                         let token = createToken(newUser)
