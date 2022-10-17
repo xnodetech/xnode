@@ -106,5 +106,61 @@ router.post('/login', AuthController.loginUser)
 */
 
 router.post('/passwordReset', AuthController.resetPassword)
+/**
+* @swagger
+* /passwordReset:
+*   post:
+*     tags: [Authentication]
+*     name: Forgot Password
+*     summary: Reset a user's password
+*     consumes:
+*       - application/json
+*     parameters:
+*       - name: body
+*         in: body
+*         schema:
+*           $ref: '#/definitions/User'
+*           type: object
+*           properties:
+*             email:
+*               type: string
+*          required:
+*           - email
+*     responses:
+*       200:
+*         description: password reset link sent to your email account
+*       401:
+*         description: user with given email doesn't exist
+*       500:
+*         description: server error
+*/
+
 router.post('/passwordReset/:userId/:token', AuthController.changePassword)
+
+/**
+ * @swagger
+ * '/passwordReset/{userId}/{token}':
+ *  post:
+ *     tags:
+ *     - Authentication
+ *     summary: change user's password
+ *     parameters:
+ *      - name: userId
+ *        in: path
+ *        description: user id
+ *        required: true
+ *      - name: token
+ *        in: path
+ *        description: token of a user
+ *        required: true
+ *     responses:
+ *      200:
+ *        description: Removed
+ *      400:
+ *        description: Bad request
+ *      404:
+ *        description: Not Found
+ */
+
+
 module.exports = router
