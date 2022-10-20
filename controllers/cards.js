@@ -4,8 +4,8 @@ const Cards = require('../models/cards')
 const addCards = (req, res) => {
  
     const card = req.body;
-    const newCard = new Cards({ 
-        userId: req.user.id,
+    const newCard = new Cards({  
+         userId: req.user.id,
         cardName: card.cardName,
         cardNumber:card.cardNumber,
         cardDate:card.cardDate,

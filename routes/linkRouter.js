@@ -6,8 +6,8 @@ const { authenticateUser } = require('../middlewares/authentication')
 
 router.get("/",authenticateUser,LinkController.getMyLinks)
 router.get("/:id",authenticateUser,LinkController.getLink)
-router.post("/",authenticateUser,LinkController.createLink)
-router.put("/:id",authenticateUser,LinkController.updateLink)
-router.delete("/:id",authenticateUser,LinkController.deleteLink)
+router.post("/create",authenticateUser,LinkController.createLink)
+router.put("/update/:id",authenticateUser,LinkController.updateLink)
+router.delete("/delete/:id",authenticateUser,LinkController.deleteLink)
 
 module.exports = router;

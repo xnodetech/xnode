@@ -1,9 +1,15 @@
 swagger: "2.0"
-host: localhost:3000
+host: xnodeapis.herokuapp.com
 info: 
  title: XNODE API
  description: API FOR XNODE SERVICES
  version: 1.0
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
 paths:
  /auth/signup:
   post:
@@ -150,6 +156,8 @@ paths:
    tags:
     - Authentication 
    description: changed users password
+   security:
+    - Bearer: []
    parameters:
      - name: userId
        in: path
@@ -175,12 +183,149 @@ paths:
         type: string
         example: "message"
 
+    401:
+     description:  Invalid link
+    404:
+     description:  Password change failure
+    500:
+     description:  Internal server error
  
+ /link/:
+  get:
+   summary: get the links of the user
+   tags:
+    - Links
+   description: get all the links
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error getting the links
+    500:
+     description:  Internal server error
 
+ /link/create/:
+  post:
+   summary: create a link
+   security:
+    - Bearer: []
+   tags:
+    - Links
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: User
+     schema:
+      type: object
+      properties: 
+       linkUrl:
+        type: string
+       description:
+        type: string
+      
+   responses:
+    200:
+     description: New link added
+    401:
+     description: adding Link error
+    500:
+     description: internal server error
 
+ /link/{id}:
+  get:
+   summary: get a link
+   tags:
+    - Links
+   description: get a particular link
+   security:
+    - Bearer: []
+   parameters:
+     - name: id
+       in: path
+       required: true
+       schema:
+        type: string
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error getting the link
+    500:
+     description:  Internal server error
+
+  
+ /link/update/{id}:
+  put:
+   summary: update a link
+   security:
+    - Bearer: []
+   tags:
+    - Links
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: path
+     name: id
+     required: true
+       schema:
+        type: integer
+   - in: body
+     name: User
+     schema:
+      type: object
+      properties: 
+       linkUrl:
+        type: string
+       description:
+        type: string
+      
+   responses:
+    200:
+     description: New link updated
+    401:
+     description: updating Link error
+    500:
+     description: internal server error
+
+ /link/delete/{id}:
+  delete:
+   summary: delete a link
+   tags:
+    - Links
+   description: delete a particular link of the user
+   security:
+    - Bearer: []
+   parameters:
+     - name: id
+       in: path
+       required: true
+       schema:
+        type: string
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error deleying the link
+    500:
+     description:  Internal server error  
+ 
      
 
 components: 
+ securitySchemes:
+  BearerAuth:
+   type: http
+   scheme: bearer
  schemas:
   User:
    type: object

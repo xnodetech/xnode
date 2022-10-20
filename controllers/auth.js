@@ -123,21 +123,21 @@ exports.changePassword = async (req, res) => {
     try {
 
         const user = await User.findById(req.params.userId);
-        if (!user) return res.status(400).send("invalid link or expired");
+        if (!user) return res.status(401).send("wrong user");
 
         const token = await Token.findOne({
             userId: user._id,
             token: req.params.token,
         });
-        if (!token) return res.status(400).send("Invalid link or expired");
+        if (!token) return res.status(402).send("Invalid link or expired");
 
         bcrypt.genSalt(10, (err, salt) => {
             if (err) {
-                return res.status(500).json({ err });
+                return res.status(403).send(err.message);
             }
             bcrypt.hash(req.body.password, salt, (err, hashedPassword) => {
                 if (err) {
-                    return res.status(500).json({ err });
+                    return res.status(404).send(err.message);
                 }
 
                 user.password = hashedPassword;

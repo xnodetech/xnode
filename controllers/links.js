@@ -7,7 +7,7 @@ const createLink = (req, res) => {
     const newLink = new Link({ 
         userId: req.user.id,
         linkUrl: link.linkUrl, 
-        description: link.description
+         description: link.description
        });
     newLink.save((err, result) => {
         if (err) {
@@ -25,7 +25,7 @@ const getMyLinks = async (req, res) => {
         const links = await Link.find({ userId: req.user.id }).sort('createdAt')
         res.status(200).json({ links, count: links.length })
     }catch(err){
-        console.log(err.message)
+         console.log(err.message)
         console.error(err)
         res.json({Error:err.message})
 
@@ -46,7 +46,7 @@ const getLink = (req,res) => {
         }
   
         if(!err) {
-           return res.json({status:"Success",message:linkUrl});
+           return res.json({status:"Success",message:link});
         } else {
   
             console.log(err.message)
