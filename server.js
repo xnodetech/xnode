@@ -12,7 +12,10 @@ const WalletRouter = require("./routes/walletRouter")
 const User = require('./models/user')
 const app = express()
 require('dotenv').config()
-
+const { use } = require("express/lib/application")
+const swaggerUI = require("swagger-ui-express")
+const YAML = require("yamljs")
+const swaggerDoc = YAML.load('./api.yaml')
 app.use(cors())
 app.use(express.json())
 app.use("/auth",authRouter)
@@ -22,25 +25,6 @@ app.use("/profile",ProfileRouter)
 app.use("/Qrcode",QRRouter)
 app.use("/wallet",WalletRouter)
 
-    
-const options = {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "New Title",
-definition:{
-  openapi:"3.0.0",
-  info:{
-    title: "XNODE API",
-    version: "1.0.0",
-    description:"API ENDPOINTS "
-  },
-  servers:[
-    {
-      url:"https://xnodeapis.herokuapp.com/"
-    }
-  ]
-},
-  apis:["./routes/*.js"]
-}
 app.use("profiles/:username",async(req,res) => {
   const {username} = req.params
   
@@ -55,8 +39,7 @@ app.use("profiles/:username",async(req,res) => {
 }
 
 })
-const specs = swaggerDocs(options)
-app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(specs))
+app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(swaggerDoc))
 // Root route of express app
 app.get("/", (req, res) => {
   res.send("<a href='/api-docs'>View Documentation</a>");

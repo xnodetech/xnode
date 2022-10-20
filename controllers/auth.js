@@ -26,16 +26,16 @@ exports.registerNewUser = (req, res) => {
 
         }, (err, newUser) => {
             if (err) {
-                return res.status(500).json({ err })
+                return res.status(500).json(err.message)
             }
             // hash user's password
             bcrypt.genSalt(10, (err, salt) => {
                 if (err) {
-                    return res.status(500).json({ err });
+                    return res.status(500).json(err.message);
                 }
                 bcrypt.hash(req.body.password, salt, (err, hashedPassword) => {
                     if (err) {
-                        return res.status(500).json({ err });
+                        return res.status(500).json(err.message);
                     }
                     // save password to database
                     newUser.password = hashedPassword
@@ -52,7 +52,7 @@ exports.registerNewUser = (req, res) => {
                         return res.status(200).json({
                             success: true,
                             message: "New XNODE user added",
-                            token
+                            token : token
                         })
                     })
                 })
@@ -85,10 +85,10 @@ exports.loginUser = (req, res) => {
         return res.status(200).json({
             success: true,
             message: "XNODE USER LOGGED IN",
-            token
+            token:token
         })
 
-    })
+    }) 
 }
 
 exports.resetPassword = async (req, res) => {

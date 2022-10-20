@@ -1,0 +1,202 @@
+swagger: "2.0"
+host: localhost:3000
+info: 
+ title: XNODE API
+ description: API FOR XNODE SERVICES
+ version: 1.0
+paths:
+ /auth/signup:
+  post:
+   summary: Create a new user
+   tags:
+    - Authentication
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: User
+     schema:
+      $ref: "#/components/schemas/User"
+      
+   responses:
+    200:
+     description: User created
+     schema:
+      type: object
+      properties: 
+       success:
+        type: boolean
+        example: true
+       message:
+        type: string
+        example: "message"
+       token:
+        type: string
+        example: "token"
+      
+    401:
+     description: User was not created
+    500:
+     description: User was not created too
+
+ /auth/login:
+  post:
+   summary: Login a user
+   tags:
+    - Authentication
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: User
+     schema:
+      type: object
+      properties: 
+       username:
+        type: string
+       password:
+        type: string
+      
+   responses:
+    200:
+     description: User Logged in
+     schema:
+      type: object
+      properties: 
+       success:
+        type: boolean
+        example: true
+       message:
+        type: string
+        example: "message"
+       token:
+        type: string
+        example: "token"
+      
+    401:
+     description: Login error
+     schema:
+      type: object
+      properties: 
+       message:
+        type: string
+        example: "message"
+      
+       
+    500:
+     description: Login error
+     schema:
+      type: object
+      properties: 
+       message:
+        type: string
+        example: "message"
+
+ 
+ /passwordReset:
+  post:
+   summary: Reset user's password
+   tags:
+    - Authentication
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: User
+     schema:
+      type: object
+      properties: 
+       email:
+        type: string
+      
+      
+   responses:
+    200:
+     description: Password reset successful
+     schema:
+      type: object
+      properties: 
+       success:
+        type: boolean
+        example: true
+       message:
+        type: string
+        example: "message"
+       
+      
+    401:
+     description: Email is not found
+     schema:
+      type: string
+      example: "email not found"
+      
+           
+    500:
+     description: Server error
+     schema:
+      type: string
+      example: "server eror"
+
+
+ /passwordReset/{userId}/{token}:
+  post:
+   summary: change the user password
+   tags:
+    - Authentication 
+   description: changed users password
+   parameters:
+     - name: userId
+       in: path
+       required: true
+       schema:
+        type: string
+     - name: token
+       in: path
+       required: true
+       schema:
+        type: string
+      
+   responses:
+    200:
+     description: Success
+     schema:
+      type: object
+      properties: 
+       success:
+        type: boolean
+        example: true
+       message:
+        type: string
+        example: "message"
+
+ 
+
+
+     
+
+components: 
+ schemas:
+  User:
+   type: object
+   properties: 
+    firstName:
+     type: string
+     required: true
+    lastName:
+     type: string
+     required: true
+    email:
+     type: string
+     required: true
+    username:
+     type: string
+     required: true
+    password:
+     type: string
+     required: true
