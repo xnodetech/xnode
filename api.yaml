@@ -318,8 +318,188 @@ paths:
      description:  Error deleying the link
     500:
      description:  Internal server error  
+
+ /Qrcode/generate/:
+  get:
+   summary: generate qrcode for a new user
+   tags:
+    - QRCode
+   description: generate qrcode for the new user
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error generating the qrcode
+    500:
+     description:  Internal server error
+
+ /Qrcode/profile/:
+  post:
+   summary: get user profile via qrcode
+   tags:
+    - QRCode
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Qrcode
+     schema:
+      type: object
+      properties: 
+       token:
+        type: string
+       
+      
+   responses:
+    200:
+     description: User profile gotten
+    401:
+     description: could not get user's profile via qr code
+    500:
+     description: internal server error
+
+ /Qrcode/code/:
+  get:
+   summary: get the qrcode for the user
+   tags:
+    - QRCode
+   description: get the particular qrcode for the user
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error getting the qrcode
+    500:
+     description:  Internal server error
  
-     
+ /profile/addPhoto:
+  put:
+   summary: add profile photo
+   description: adding profile photo
+   tags:
+    - Profile
+   consumes:
+    - multipart/form-data
+   security:
+    - Bearer: []
+   parameters:
+    - in: formData
+      name: file
+      type: file
+      required: true
+      description: File Upload
+   responses:
+    200:
+     description: File successfully uploaded
+    401:
+     description: error uploading file
+    500:
+     description: internal server error  
+
+ /profile/getProfilePhoto:
+  get:
+   summary: get profile photo for the user
+   tags:
+    - Profile
+   description: get the particular profile photo for the user
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error getting the profile photo
+    500:
+     description:  Internal server error
+
+
+ /profile/getProfile:
+  get:
+   summary: get profile for the user
+   tags:
+    - Profile
+   description: get the particular profile for the user
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error getting the profile
+    500:
+     description:  Internal server error
+
+ /profile/setPin:
+  put:
+   summary: set user's pin
+   security:
+    - Bearer: []
+    
+   tags:
+    - Profile
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Profile
+     schema:
+      type: object
+      properties: 
+       pin:
+        type: string
+       
+      
+   responses:
+    200:
+     description: User pin set
+    401:
+     description: could not set user's pin
+    500:
+     description: internal server error
+
+ /profile/verifyPin:
+  post:
+   summary: verify user's pin
+   security:
+    - Bearer: []
+    
+   tags:
+    - Profile
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Profile
+     schema:
+      type: object
+      properties: 
+       pin:
+        type: string
+       
+      
+   responses:
+    200:
+     description: User pin verified
+    401:
+     description: could not verify user's pin
+    500:
+     description: internal server error
+
+
 
 components: 
  securitySchemes:
