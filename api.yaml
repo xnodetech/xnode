@@ -337,7 +337,7 @@ paths:
      description:  Internal server error
 
  /Qrcode/profile/:
-  post:
+  get:
    summary: get user profile via qrcode
    tags:
     - QRCode
@@ -498,6 +498,165 @@ paths:
      description: could not verify user's pin
     500:
      description: internal server error
+
+
+ /wallet/transferByUsername:
+  post:
+   summary: Transfer money to another user's wallet via username
+   security:
+    - Bearer: []
+    
+   tags:
+    - Wallet
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Wallet
+     schema:
+      type: object
+      properties: 
+       username:
+        type: string
+       amount:
+        type: string
+      
+   responses:
+    200:
+     description: Transferred successfully
+    401:
+     description: Transfer failed
+    500:
+     description: Internal server error
+
+ /wallet/create:
+  post:
+   summary: create wallet for user
+   tags:
+    - Wallet
+   description: create a new wallet
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error not creating new wallet
+    500:
+     description:  Internal server error
+     
+ /wallet/balance:
+  get:
+   summary: get wallet balance for user
+   tags:
+    - Wallet
+   description: get wallet balance for user
+   security:
+    - Bearer: []
+    
+   responses: 
+    200:
+     description: Success
+    401:
+     description:  Error for not getting wallet balance
+    500:
+     description:  Internal server error
+
+ /wallet/transferByQrcode:
+  post:
+   summary: Transfer money to another user's wallet via qrcode
+   security:
+    - Bearer: []
+    
+   tags:
+    - Wallet
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Wallet
+     schema:
+      type: object
+      properties: 
+       token:
+        type: string
+       amount:
+        type: string
+      
+   responses:
+    200:
+     description: Transferred successfully
+    401:
+     description: Transfer failed
+    500:
+     description: Internal server error
+
+ /wallet/topup:
+  post:
+   summary: Topup user's wallet
+   security:
+    - Bearer: []
+    
+   tags:
+    - Wallet
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Wallet
+     schema:
+      type: object
+      properties: 
+       amount:
+        type: string
+      
+   responses:
+    200:
+     description: TOPUP successful
+    401:
+     description: Topup failed
+    500:
+     description: Internal server error
+
+ /wallet/withdraw:
+  post:
+   summary: Withdraw user's wallet
+   security:
+    - Bearer: []
+    
+   tags:
+    - Wallet
+   produces: 
+    - application/json
+   consumes:
+    - application/json
+   parameters:
+   - in: body
+     name: Wallet
+     schema:
+      type: object
+      properties: 
+       amount:
+        type: string
+      
+   responses:
+    200:
+     description: Withdraw successful
+    401:
+     description: withdraw failed
+    500:
+     description: Internal server error
+     
+     
+
+
 
 
 

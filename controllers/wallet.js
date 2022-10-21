@@ -11,7 +11,7 @@ const createWallet = (req, res) => {
 
     const newWallet = new Wallet({
         userId: req.user.id,
-        amount: "100000"
+        amount: "0"
     });
     newWallet.save((err, result) => {
         if (err) {
