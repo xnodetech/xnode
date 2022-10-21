@@ -608,7 +608,7 @@ paths:
     - application/json
    consumes:
     - application/json
-   parameters:
+   parcameters:
    - in: body
      name: Wallet
      schema:
