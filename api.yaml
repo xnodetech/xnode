@@ -103,7 +103,7 @@ paths:
         example: "message"
 
  
- /passwordReset:
+ /auth/passwordReset:
   post:
    summary: Reset user's password
    tags:
@@ -114,7 +114,7 @@ paths:
     - application/json
    parameters:
    - in: body
-     name: User
+     name: Password
      schema:
       type: object
       properties: 
@@ -150,14 +150,13 @@ paths:
       example: "server eror"
 
 
- /passwordReset/{userId}/{token}:
+ /auth/passwordReset/{userId}/{token}:
   post:
    summary: change the user password
    tags:
     - Authentication 
    description: changed users password
-   security:
-    - Bearer: []
+   
    parameters:
      - name: userId
        in: path
